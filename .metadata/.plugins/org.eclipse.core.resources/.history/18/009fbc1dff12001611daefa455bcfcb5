@@ -1,0 +1,28 @@
+package test;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+public class Login implements ILogin {
+
+	private Connection con;
+
+	public Login() {
+		DBConnector dbc = new DBConnector();
+		this.con = dbc.getNewConnection();
+	}
+
+	public Connection getConnection() {
+		try {
+			System.out.println(con.getMetaData().getURL().toString());
+			System.out.println(con.getMetaData().getUserName().toString());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return this.con;
+	}
+
+
+
+}

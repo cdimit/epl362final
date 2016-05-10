@@ -1,0 +1,19 @@
+package test;
+
+import java.sql.Connection;
+
+public class t1 implements It1{
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		Connection conn = null;
+		try {
+				conn = DBConnector.getDBConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+				
+	}
+
+}

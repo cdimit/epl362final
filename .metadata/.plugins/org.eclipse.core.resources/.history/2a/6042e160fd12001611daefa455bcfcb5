@@ -1,0 +1,47 @@
+package types;
+
+public class Employee {
+
+	private String EmployeeID;
+	private String NationalID;
+	private String FirstName;
+	private String LastName;
+	private String Birthday;
+	private String Sex;
+	private String Tel;
+	private String Nationality;
+	private String Country;
+	private String City;
+	private String PostCode;
+	private String Street;
+	private String Role;
+	private String Username;
+	private String Password;
+	
+	public Employee(){
+		
+	}
+	
+	public Employee( String EmployeeID,
+	 String NationalID,
+	 String FirstName,
+	 String LastName,
+	 String Birthday,
+	 String Sex,
+	 String Tel,
+	 String Nationality,
+	 String Country,
+	 String City,
+	 String PostCode,
+	 String Street,
+	 String Role,
+	 String Username,
+	 String Password){
+		
+		
+		
+		
+	}
+	
+	
+}

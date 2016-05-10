@@ -1,0 +1,141 @@
+package serviceconsumerexample;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+
+import generalServices.IServices;
+import types.Employee;
+
+import javax.swing.JLabel;
+
+import java.awt.Font;
+
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.CardLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class LoginViewPoint extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField textField_1;
+
+	/**
+	 * 
+	 * Launch the application.
+	 */
+	// public static void main(String[] args) {
+	// EventQueue.invokeLater(new Runnable() {
+	// public void run() {
+	// try {
+	// LoginViewPoint frame = new LoginViewPoint();
+	// frame.setVisible(true);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// });
+	// }
+
+	/**
+	 * Create the frame.
+	 */
+	public LoginViewPoint(BundleContext context) {
+		ServiceReference iser = context.getServiceReference(IServices.class.getName());
+		IServices ise = (IServices) context.getService(iser);
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new CardLayout(0, 0));
+
+		JPanel panel = new JPanel();
+		contentPane.add(panel, "name_667058342214574");
+		panel.setLayout(null);
+
+		JLabel label_1 = new JLabel("Username");
+		label_1.setBounds(69, 73, 63, 17);
+		label_1.setFont(new Font("Century Gothic", Font.PLAIN, 13));
+		panel.add(label_1);
+
+		JLabel label_2 = new JLabel("Password");
+		label_2.setBounds(69, 121, 61, 17);
+		label_2.setFont(new Font("Century Gothic", Font.PLAIN, 13));
+		panel.add(label_2);
+
+		textField_1 = new JTextField();
+		textField_1.setBounds(167, 69, 136, 29);
+		panel.add(textField_1);
+		textField_1.setColumns(10);
+
+		textField = new JTextField();
+		textField.setBounds(167, 111, 136, 29);
+		panel.add(textField);
+		textField.setColumns(10);
+
+		JButton button = new JButton("Submit");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				Employee emp = ise.GET_EMPLOYEE(textField_1.getText(), textField.getText());
+
+				if (emp == null) {
+					System.out.println("Error");
+				} else {
+
+					if (emp.getRole().compareTo("Legal Stuff") == 0) {
+						System.out.println("LEGAL STUFF");
+						LegalStaffViewPoint lsvp = new LegalStaffViewPoint(context);
+						lsvp.setVisible(true);
+						 dispose();
+
+						// LegalStaffViewPoint ls = new LegalStaffViewPoint();
+						// ls.setVisible(true);
+					}
+					if (emp.getRole().compareTo("Receptionist") == 0) {
+						System.out.println("RECEPTIONIST");
+						// ReceptionistViewPoint res = new
+						// ReceptionistViewPoint();
+						// res.setVisible(true);
+					}
+					 if (emp.getRole().compareTo("Head Office Management")==0){
+						 System.out.println("Head Office Management");
+						 HeadOfficeManagementViewPoint homv = new HeadOfficeManagementViewPoint(context);
+						 homv.setVisible(true);
+						 dispose();
+						 
+						 
+					 }
+					// HeadOfficeManagementViewPoint res = new
+					// HeadOfficeManagementViewPoint();
+					// res.setVisible(true);
+					// }
+				}
+			}
+		});
+		button.setBounds(135, 165, 132, 40);
+		panel.add(button);
+
+		JLabel label = new JLabel("LogIn");
+		label.setBounds(0, 0, 424, 21);
+		panel.add(label);
+		label.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+	}
+
+}

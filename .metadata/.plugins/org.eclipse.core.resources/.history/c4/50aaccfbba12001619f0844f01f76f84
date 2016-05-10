@@ -1,0 +1,35 @@
+package serviceconsumerexample;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+
+import test.ILogin;
+
+public class Activator implements BundleActivator {
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+	 */
+	public void start(BundleContext context) throws Exception {
+		System.out.println("Start Sample Consumer");
+		
+		ServiceReference iasr=context.getServiceReference(ILogin.class.getName());
+		ILogin ias = (ILogin) context.getService(iasr);
+		
+		ias.connect();
+		ias.getConnection();
+		
+		
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 */
+	public void stop(BundleContext context) throws Exception {
+		System.out.println("Stop Sample Consumer");
+	}
+
+}

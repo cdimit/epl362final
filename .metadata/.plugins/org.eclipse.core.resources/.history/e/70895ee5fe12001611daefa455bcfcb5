@@ -1,0 +1,43 @@
+package serviceconsumerexample;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+
+import test.ILogin;
+import test.IServices;
+import types.Employee;
+
+
+public class Activator implements BundleActivator {
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+	 */
+	public void start(BundleContext context) throws Exception {
+		System.out.println("Start Sample Consumer");
+		
+		ServiceReference iasr=context.getServiceReference(ILogin.class.getName());
+		ILogin ias = (ILogin) context.getService(iasr);
+		
+		
+		ServiceReference iser=context.getServiceReference(IServices.class.getName());
+		IServices ise = (IServices) context.getService(iser);
+		
+		Employee emp = ise.GET_EMPLOYEE("cmakri06", "1234");
+		
+		System.out.println(emp.getFirstName();
+		
+		
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 */
+	public void stop(BundleContext context) throws Exception {
+		System.out.println("Stop Sample Consumer");
+	}
+
+}

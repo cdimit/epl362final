@@ -1,0 +1,10 @@
+package test;
+
+import java.sql.Connection;
+
+public interface ILogin {
+
+	public abstract Connection getConnection();
+	
+	public void connect();
+}

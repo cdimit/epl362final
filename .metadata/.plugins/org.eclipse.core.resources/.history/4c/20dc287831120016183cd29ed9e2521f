@@ -1,0 +1,29 @@
+package test;
+
+import java.sql.Connection;
+
+public class t1 implements It1 {
+
+	private Connection con;
+
+	public t1() {
+		DBConnector dbc = new DBConnector();
+		this.con = dbc.getNewConnection();
+	}
+
+	public Connection getConnection() {
+		System.out.println(con.getMetaData().toString());
+		return this.con;
+	}
+
+	public void connect() {
+
+		try {
+			con = DBConnector.getDBConnection();
+
+		} catch (Exception ex) {
+			// System.out.println(ex.toString());
+		}
+	}
+
+}

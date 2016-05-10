@@ -1,0 +1,35 @@
+package serviceconsumerexample;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+
+import test.It1;
+
+public class Activator implements BundleActivator {
+
+	/*
+	 * (non-Javadoc)
+	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+	 */
+	public void start(BundleContext context) throws Exception {
+		System.out.println("Start Sample Consumer");
+		
+		ServiceReference iasr=context.getServiceReference(It1.class.getName());
+		It1 ias = (It1) context.getService(iasr);
+		
+		ias.connect();
+		ias.getConnection()();
+		
+		
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+	 */
+	public void stop(BundleContext context) throws Exception {
+		System.out.println("Stop Sample Consumer");
+	}
+
+}

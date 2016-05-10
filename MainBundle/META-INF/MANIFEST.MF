@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test
+Bundle-ClassPath: sqljdbc4.jar,.
+Bundle-SymbolicName: MainBundle
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: generalServices.Activator
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.osgi.framework;version="1.3.0"
+Export-Package: generalServices;uses:="org.osgi.framework",
+ types

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="test.DBConnector"/>
+<fullyQualifiedTypeName name="java.sql.Connection"/>
+<fullyQualifiedTypeName name="org.osgi.framework.ServiceReference"/>
+<fullyQualifiedTypeName name="test.It1"/>
+<fullyQualifiedTypeName name="test.ILogin"/>
+<fullyQualifiedTypeName name="java.util.concurrent.CountDownLatch"/>
+<fullyQualifiedTypeName name="java.sql.CallableStatement"/>
+<fullyQualifiedTypeName name="java.sql.ResultSet"/>
+<fullyQualifiedTypeName name="test.IServices"/>
+<fullyQualifiedTypeName name="types.Employee"/>
+<fullyQualifiedTypeName name="serviceconsumerexample.LoginViewPoint"/>
+<fullyQualifiedTypeName name="serviceconsumerexample.LegalStaffViewPoint"/>
+<fullyQualifiedTypeName name="serviceconsumerexample.ReceptionistViewPoint"/>
+</qualifiedTypeNameHistroy>
