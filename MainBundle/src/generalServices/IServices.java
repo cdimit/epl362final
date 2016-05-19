@@ -17,18 +17,19 @@ import types.Opinion;
 import types.Recommendation;
 import types.WarningMessages;
 
+/**
+ * This is the Interface which contains all the methods that can be called from the consumer.
+ * If a method is not here then the consumer can't call it.
+ */
+
 public interface IServices {
 
 	public Employee GET_EMPLOYEE(String USERNAME, String PASSWORD);
 
 	public DefaultListModel<Client> GET_ALL_CLIENTS();
 
-	
-//////////////////////INSERT////////////////////////////////////
-	public boolean INSERT_APPOINTMENT(String DATE, 
-			Integer IS_DROP_IN, Integer IS_ATTENTED,Integer CLIENT_ID,
-			Integer EMPLOYEE_ID);
-	
+	public boolean DELETE_CLIENT(Integer client_id);
+
 	public boolean INSERT_CLIENT(Integer NationalID, String FirstName, String LastName, String BirthDate, boolean Sex,
 			String Tel, String Nationality, String Country, String City, String PostCode, String Street,
 			String Comments, boolean hasIllegal , Integer isDeleted);
@@ -46,7 +47,7 @@ public interface IServices {
 	
 	public boolean INSERT_INCIDENT_DISPUTES(String DETAILS,Integer IS_INCIDENT);
 	
-	public boolean INSERT_OFFICE_CASE(String NAME,String DETAILS,Integer IS_INCIDENT,
+	public boolean INSERT_OFFICE_CASE(Integer CLIENT_ID,String NAME,String DETAILS,boolean IS_INCIDENT,
 			String LAST_UPDATED,Integer EMPLOYEE_ID );
 	
 	public boolean INSERT_OPINION(Integer EMPLOYEE_ID,Integer CASE_ID,
@@ -57,11 +58,12 @@ public interface IServices {
 	
 	public boolean INSERT_WARNING_MESSAGES(Integer EMPLOYEE_ID,	String MESSAGE );
 	
-	
-//////////////////////UPDATE	/////////////////////////////
-	public boolean UPDATE_APPOINTMENT(Integer APPOINTMENT_ID,String DATE, 
+	public boolean INSERT_APPOINTMENT(String DATE, 
 			Integer IS_DROP_IN, Integer IS_ATTENTED,Integer CLIENT_ID,
 			Integer EMPLOYEE_ID);
+	
+	
+	
 	
 	public boolean UPDATE_CLIENT(Integer ClientID,Integer NationalID, String FirstName, String LastName, String BirthDate, boolean Sex,
 			String Tel, String Nationality, String Country, String City, String PostCode, String Street,
@@ -80,8 +82,8 @@ public interface IServices {
 	
 	public boolean UPDATE_INCIDENT_DISPUTES(Integer INCIDENT_DISPUTE_ID,String DETAILS,Integer IS_INCIDENT);
 	
-	public boolean UPDATE_OFFICE_CASE(Integer CASE_ID,String NAME,String DETAILS,
-			Integer IS_INCIDENT,String LAST_UPDATED,Integer EMPLOYEE_ID );
+	public boolean UPDATE_OFFICE_CASE(Integer CASE_ID,Integer CLIENT_ID,String NAME,String DETAILS,
+			Boolean IS_INCIDENT,String LAST_UPDATED,Integer EMPLOYEE_ID ) ;
 	
 	public boolean UPDATE_OPINION(Integer OPINION_ID,Integer EMPLOYEE_ID,Integer CASE_ID,
 			String DETAILS,Integer CLIENT_CASE_ID );
@@ -91,9 +93,12 @@ public interface IServices {
 	
 	public boolean UPDATE_WARNING_MESSAGES(Integer WARNING_MESSAGE_ID,Integer EMPLOYEE_ID,	String MESSAGE );
 	
+	public boolean UPDATE_APPOINTMENT(Integer APPOINTMENT_ID,String DATE, 
+			Integer IS_DROP_IN, Integer IS_ATTENTED,Integer CLIENT_ID,
+			Integer EMPLOYEE_ID);
 	
-	////////////GET////////////////////////
-	public Appointment GET_APPOINTMENT(Integer APPOINTMENT_ID);
+	
+	
 	
 	public Branch GET_BRANCH(Integer BRANCH_ID);
 	
@@ -116,8 +121,12 @@ public interface IServices {
 	public WarningMessages GET_WARNING_MESSAGES(Integer WARNING_MESSAGE_ID);
 	
 	
-	/////////////////LIST//////////////////////////
-	public DefaultListModel<Appointment> LIST_APPOINTMENT();
+	public Appointment GET_APPOINTMENT(Integer APPOINTMENT_ID);
+
+	
+	
+	
+	
 	
 	public DefaultListModel<Branch> LIST_BRANCH();
 	
@@ -137,11 +146,11 @@ public interface IServices {
 	
 	public DefaultListModel<WarningMessages> LIST_WARNING_MESSAGES();
 	
+	public DefaultListModel<Appointment> LIST_APPOINTMENT();
+
 	
-	////////////////////DELETE//////////////////////////
-	public boolean DELETE_CLIENT(Integer client_id);
 	
-	public boolean DELETE_APPOINTMENT(Integer APPOINTMENT_ID);
+	
 	
 	public boolean DELETE_BRANCH(Integer BRANCH_ID);
 	
@@ -161,7 +170,10 @@ public interface IServices {
 	
 	public boolean DELETE_RECOMMENDATION(Integer RECOMMENDATION_ID);
 	
-	public boolean DELETE_WARNING_MESSAGES(Integer WARNING_MESSAGE_ID);	
+	public boolean DELETE_WARNING_MESSAGES(Integer WARNING_MESSAGE_ID);
+	
+	public boolean DELETE_APPOINTMENT(Integer APPOINTMENT_ID);
+
 	
 	
 	

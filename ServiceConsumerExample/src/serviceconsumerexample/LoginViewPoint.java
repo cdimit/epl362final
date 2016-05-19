@@ -34,25 +34,11 @@ public class LoginViewPoint extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 
-	/**
-	 * 
-	 * Launch the application.
-	 */
-	// public static void main(String[] args) {
-	// EventQueue.invokeLater(new Runnable() {
-	// public void run() {
-	// try {
-	// LoginViewPoint frame = new LoginViewPoint();
-	// frame.setVisible(true);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// });
-	// }
+	
 
 	/**
-	 * Create the frame.
+	 * This is the first GUI frame that will be created. From there on everything else is created
+	 * based on the login credentials.
 	 */
 	public LoginViewPoint(BundleContext context) {
 		ServiceReference iser = context.getServiceReference(IServices.class.getName());

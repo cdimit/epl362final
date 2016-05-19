@@ -12,12 +12,7 @@ public class Opinion {
 
 	}
 
-	public Opinion(
-			Integer OpinionID,
-			Integer EmployeeID,
-			Integer CaseID, 
-			String Details,
-			Integer ClientCaseID) {
+	public Opinion(Integer OpinionID, Integer EmployeeID, Integer CaseID, String Details, Integer ClientCaseID) {
 		this.OpinionID=OpinionID;
 		this.EmployeeID=EmployeeID;
 		this.CaseID=CaseID;

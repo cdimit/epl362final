@@ -12,6 +12,13 @@ import javax.swing.DefaultListModel;
 
 import types.*;
 
+/**
+ * This is the Services class which contains all the services that correspond to a specific
+ * SP in the DB. Each method is used in a viewpoint. The services extend an Interface which
+ * contains the prototypes of the methods that can be called from the consumer.
+ */
+
+
 public class Services implements IServices {
 
 	private Connection con;
@@ -32,43 +39,6 @@ public class Services implements IServices {
 		return this.con;
 	}
 	//INSERT METHODS
-	public boolean INSERT_APPOINTMENT(String DATE, 
-			Integer IS_DROP_IN, Integer IS_ATTENTED,Integer CLIENT_ID,
-			Integer EMPLOYEE_ID) {
-		CallableStatement cstmt = null;
-		boolean result = true;
-		try {
-			con = DBConnector.getDBConnection();
-			cstmt = con.prepareCall("{call SP_INSERT_APPOINTMENT(?,?,?,?)}");
-
-			
-			
-			java.util.Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(DATE);
-			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-			
-			cstmt.setDate(1,  sqlDate);
-			cstmt.setInt(2, IS_DROP_IN);
-			cstmt.setInt(3, IS_ATTENTED);
-			cstmt.setInt(4, CLIENT_ID);
-			cstmt.setInt(5, EMPLOYEE_ID);
-		
-			
-
-			cstmt.execute();
-
-		} catch (Exception ex) {
-			result = false;
-		} finally {
-			try {
-				cstmt.close();
-			} catch (SQLException e) {
-			}
-		}
-		return result;
-	}
-
-	
-	
 	public boolean INSERT_CLIENT(Integer NationalID, String FirstName, String LastName, String BirthDate, boolean Sex,
 			String Tel, String Nationality, String Country, String City, String PostCode, String Street,
 			String Comments, boolean hasIllegal , Integer isDeleted) {
@@ -237,7 +207,7 @@ public class Services implements IServices {
 		boolean result = true;
 		try {
 			con = DBConnector.getDBConnection();
-			cstmt = con.prepareCall("{call SP_INSERT_INCIDENT_DISPUTES(?,?)}");
+			cstmt = con.prepareCall("{call SP_INSERT_INCIDENTS_DISPUTES(?,?)}");
 					
 			
 			cstmt.setString(1, DETAILS);
@@ -256,22 +226,29 @@ public class Services implements IServices {
 		return result;
 	}
 
-	public boolean INSERT_OFFICE_CASE(String NAME,String DETAILS,Integer IS_INCIDENT,
+	public boolean INSERT_OFFICE_CASE(Integer CLIENT_ID,String NAME,String DETAILS,boolean IS_INCIDENT,
 			String LAST_UPDATED,Integer EMPLOYEE_ID ) {
 		CallableStatement cstmt = null;
 		boolean result = true;
 		try {
 			con = DBConnector.getDBConnection();
-			cstmt = con.prepareCall("{call SP_INSERT_OFFICE_CASE(?,?,?,?,?)}");
+			cstmt = con.prepareCall("{call SP_INSERT_OFFICE_CASE(?,?,?,?,?,?)}");
 			
 			java.util.Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(LAST_UPDATED);
 			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 			
-			cstmt.setString(1, DETAILS);
-			cstmt.setString(2, DETAILS);
-			cstmt.setInt(3, IS_INCIDENT);
-			cstmt.setDate(4, sqlDate);
-			cstmt.setInt(5, IS_INCIDENT);
+			cstmt.setInt(1, CLIENT_ID);
+			cstmt.setString(2, NAME);
+			cstmt.setString(3, DETAILS);
+			if(IS_INCIDENT){
+				cstmt.setInt(4, 1);
+			}
+			else{
+				cstmt.setInt(4, 0);
+			}
+			
+			cstmt.setDate(5, sqlDate);
+			cstmt.setInt(6, EMPLOYEE_ID);
 
 			cstmt.execute();
 
@@ -364,27 +341,27 @@ public class Services implements IServices {
 		return result;
 	}
 
-	
-	//UPDATE METHODS
-	
-	public boolean UPDATE_APPOINTMENT(Integer APPOINTMENT_ID,String DATE, 
+	public boolean INSERT_APPOINTMENT(String DATE, 
 			Integer IS_DROP_IN, Integer IS_ATTENTED,Integer CLIENT_ID,
 			Integer EMPLOYEE_ID) {
 		CallableStatement cstmt = null;
 		boolean result = true;
 		try {
 			con = DBConnector.getDBConnection();
-			cstmt = con.prepareCall("{call SP_UPDATE_APPOINTMENT(?,?,?,?,?)}");
+			cstmt = con.prepareCall("{call SP_INSERT_APPOINTMENT(?,?,?,?,?)}");
+
+			
 			
 			java.util.Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(DATE);
 			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 			
-			cstmt.setInt(1, APPOINTMENT_ID);
-			cstmt.setDate(2,  sqlDate);
-			cstmt.setInt(3, IS_DROP_IN);
-			cstmt.setInt(4, IS_ATTENTED);
-			cstmt.setInt(5, CLIENT_ID);
-			cstmt.setInt(6, EMPLOYEE_ID);
+			cstmt.setDate(1,  sqlDate);
+			cstmt.setInt(2, IS_DROP_IN);
+			cstmt.setInt(3, IS_ATTENTED);
+			cstmt.setInt(4, CLIENT_ID);
+			cstmt.setInt(5, EMPLOYEE_ID);
+		
+			
 
 			cstmt.execute();
 
@@ -399,6 +376,7 @@ public class Services implements IServices {
 		return result;
 	}
 	
+	//UPDATE METHODS
 	public boolean UPDATE_CLIENT(Integer ClientID,Integer NationalID, String FirstName, String LastName, String BirthDate, boolean Sex,
 				String Tel, String Nationality, String Country, String City, String PostCode, String Street,
 				String Comments, boolean hasIllegal , Integer isDeleted) {
@@ -590,23 +568,30 @@ public class Services implements IServices {
 		return result;
 	}
 
-	public boolean UPDATE_OFFICE_CASE(Integer CASE_ID,String NAME,String DETAILS,
-			Integer IS_INCIDENT,String LAST_UPDATED,Integer EMPLOYEE_ID ) {
+	public boolean UPDATE_OFFICE_CASE(Integer CASE_ID,Integer CLIENT_ID,String NAME,String DETAILS,
+			Boolean IS_INCIDENT,String LAST_UPDATED,Integer EMPLOYEE_ID ) {
 		CallableStatement cstmt = null;
 		boolean result = true;
 		try {
 			con = DBConnector.getDBConnection();
-			cstmt = con.prepareCall("{call SP_UPDATE_OFFICE_CASE(?,?,?,?,?,?)}");
+			cstmt = con.prepareCall("{call SP_UPDATE_OFFICE_CASE(?,?,?,?,?,?,?)}");
 			
 			java.util.Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(LAST_UPDATED);
 			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 			
 			cstmt.setInt(1, CASE_ID);
-			cstmt.setString(2, DETAILS);
-			cstmt.setString(3, DETAILS);
-			cstmt.setInt(4, IS_INCIDENT);
-			cstmt.setDate(5, sqlDate);
-			cstmt.setInt(6, IS_INCIDENT);
+			cstmt.setInt(2, CLIENT_ID);
+			cstmt.setString(3, NAME);
+			cstmt.setString(4, DETAILS);
+			if(IS_INCIDENT){
+				cstmt.setInt(5, 1);
+			}
+			else{
+				cstmt.setInt(5,0 );
+
+			}
+			cstmt.setDate(6, sqlDate);
+			cstmt.setInt(7, EMPLOYEE_ID);
 
 			cstmt.execute();
 
@@ -702,46 +687,39 @@ public class Services implements IServices {
 		return result;
 	}
 
-	
-	//GET METHODS
-	
-	
-	public Appointment GET_APPOINTMENT(Integer APPOINTMENT_ID) {
+	public boolean UPDATE_APPOINTMENT(Integer APPOINTMENT_ID,String DATE, 
+			Integer IS_DROP_IN, Integer IS_ATTENTED,Integer CLIENT_ID,
+			Integer EMPLOYEE_ID) {
 		CallableStatement cstmt = null;
-		Appointment result = null;
+		boolean result = true;
 		try {
 			con = DBConnector.getDBConnection();
-			cstmt = con.prepareCall("{call SP_GET_APPOINTMENT(?)}");
-
+			cstmt = con.prepareCall("{call SP_UPDATE_APPOINTMENT(?,?,?,?,?)}");
+			
+			java.util.Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(DATE);
+			java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+			
 			cstmt.setInt(1, APPOINTMENT_ID);
+			cstmt.setDate(2,  sqlDate);
+			cstmt.setInt(3, IS_DROP_IN);
+			cstmt.setInt(4, IS_ATTENTED);
+			cstmt.setInt(5, CLIENT_ID);
+			cstmt.setInt(6, EMPLOYEE_ID);
+
 			cstmt.execute();
 
-			ResultSet rs;
-			rs = (ResultSet) cstmt.getResultSet();
-			if (rs.next()) {
-				result = new Appointment(((rs.getObject(1) == null) ? null : rs.getInt(1)),
-						rs.getDate(2), 
-						rs.getInt(3),
-						rs.getInt(4),
-						rs.getInt(5),
-						rs.getInt(6));
-			}
-			rs.close();
-
 		} catch (Exception ex) {
-			ex.printStackTrace();
-			result = null;
+			result = false;
 		} finally {
 			try {
 				cstmt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
 			}
 		}
 		return result;
 	}
-
 	
+	//GET METHODS
 	public Employee GET_EMPLOYEE(String USERNAME, String PASSWORD) {
 		CallableStatement cstmt = null;
 		Employee result = null;
@@ -996,11 +974,12 @@ public class Services implements IServices {
 			rs = (ResultSet) cstmt.getResultSet();
 			if (rs.next()) {
 				result = new OfficeCase(((rs.getObject(1) == null) ? null : rs.getInt(1)), 
-						rs.getString(2),
+						rs.getInt(2),
 						rs.getString(3),
-						rs.getInt(4),
-						rs.getDate(5),
-						rs.getInt(6));
+						rs.getString(4),
+						rs.getInt(5),
+						rs.getDate(6),
+						rs.getInt(7));
 			}
 			rs.close();
 
@@ -1117,28 +1096,25 @@ public class Services implements IServices {
 		return result;
 	}
 	
-	//LIST METHODS
-	public DefaultListModel<Appointment> LIST_APPOINTMENT() {
+	public Appointment GET_APPOINTMENT(Integer APPOINTMENT_ID) {
 		CallableStatement cstmt = null;
 		Appointment result = null;
-		DefaultListModel<Appointment> list = new DefaultListModel<Appointment>();
-
 		try {
 			con = DBConnector.getDBConnection();
-			cstmt = con.prepareCall("{call SP_GET_ALL_CLIENT()}");
+			cstmt = con.prepareCall("{call SP_GET_APPOINTMENT(?)}");
 
+			cstmt.setInt(1, APPOINTMENT_ID);
 			cstmt.execute();
 
 			ResultSet rs;
 			rs = (ResultSet) cstmt.getResultSet();
-			while (rs.next()) {
+			if (rs.next()) {
 				result = new Appointment(((rs.getObject(1) == null) ? null : rs.getInt(1)),
 						rs.getDate(2), 
 						rs.getInt(3),
 						rs.getInt(4),
 						rs.getInt(5),
 						rs.getInt(6));
-				list.addElement(result);
 			}
 			rs.close();
 
@@ -1152,10 +1128,12 @@ public class Services implements IServices {
 				e.printStackTrace();
 			}
 		}
-		return list;
+		return result;
 	}
 
 	
+	
+	//LIST METHODS
 	public DefaultListModel<Client> GET_ALL_CLIENTS() {
 		CallableStatement cstmt = null;
 		Client result = null;
@@ -1389,11 +1367,12 @@ public class Services implements IServices {
 			rs = (ResultSet) cstmt.getResultSet();
 			while (rs.next()) {
 				result = new OfficeCase(((rs.getObject(1) == null) ? null : rs.getInt(1)), 
-						rs.getString(2),
+						rs.getInt(2),
 						rs.getString(3),
-						rs.getInt(4),
-						rs.getDate(5),
-						rs.getInt(6));
+						rs.getString(4),
+						rs.getInt(5),
+						rs.getDate(6),
+						rs.getInt(7));
 				list.addElement(result);
 			}
 			rs.close();
@@ -1517,32 +1496,44 @@ public class Services implements IServices {
 		return list;
 	}
 	
-	
-	//DELETE METHODS
-	
-	
-	public boolean DELETE_APPOINTMENT(Integer APPOINTMENT_ID) {
+	public DefaultListModel<Appointment> LIST_APPOINTMENT() {
 		CallableStatement cstmt = null;
-		boolean result = true;
+		Appointment result = null;
+		DefaultListModel<Appointment> list = new DefaultListModel<Appointment>();
+
 		try {
 			con = DBConnector.getDBConnection();
-			cstmt = con.prepareCall("{call SP_DELETE_APPOINTMENT(?)}");
+			cstmt = con.prepareCall("{call SP_LIST_APPOINTMENT()}");
 
-			cstmt.setInt(1, APPOINTMENT_ID);
 			cstmt.execute();
 
+			ResultSet rs;
+			rs = (ResultSet) cstmt.getResultSet();
+			while (rs.next()) {
+				result = new Appointment(((rs.getObject(1) == null) ? null : rs.getInt(1)),
+						rs.getDate(2), 
+						rs.getInt(3),
+						rs.getInt(4),
+						rs.getInt(5),
+						rs.getInt(6));
+				list.addElement(result);
+			}
+			rs.close();
+
 		} catch (Exception ex) {
-			result = false;
+			ex.printStackTrace();
+			result = null;
 		} finally {
 			try {
 				cstmt.close();
 			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 		}
-		return result;
+		return list;
 	}
-	
-	
+
+	//DELETE METHODS
 	public boolean DELETE_CLIENT(Integer client_id) {
 		CallableStatement cstmt = null;
 		boolean result = true;
@@ -1774,4 +1765,26 @@ public class Services implements IServices {
 		return result;
 	}
 
+	
+	public boolean DELETE_APPOINTMENT(Integer APPOINTMENT_ID) {
+		CallableStatement cstmt = null;
+		boolean result = true;
+		try {
+			con = DBConnector.getDBConnection();
+			cstmt = con.prepareCall("{call SP_DELETE_APPOINTMENT(?)}");
+
+			cstmt.setInt(1, APPOINTMENT_ID);
+			cstmt.execute();
+
+		} catch (Exception ex) {
+			result = false;
+		} finally {
+			try {
+				cstmt.close();
+			} catch (SQLException e) {
+			}
+		}
+		return result;
+	}
+	
 }

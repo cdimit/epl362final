@@ -4,7 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
+/**
+ * The DB connector is used so we can connect our Java application with the DB and retrieve or
+ * save data.
+ * @author Constandinos
+ *
+ */
 public class DBConnector {
 
 	

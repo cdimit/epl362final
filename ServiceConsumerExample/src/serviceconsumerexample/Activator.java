@@ -11,38 +11,20 @@ import types.Employee;
 
 public class Activator implements BundleActivator {
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+	/**
+	 * Activator for the consumer example Bundle. It activates the main viewpoint which is
+	 * the log in viewpoint. From there on other Viewpoints activate depending on the login
+	 * credentials.
 	 */
 	public void start(BundleContext context) throws Exception {
 		System.out.println("Start Sample Consumer");
-		
 
-//		ServiceReference iser=context.getServiceReference(IServices.class.getName());
-//		IServices ise = (IServices) context.getService(iser);
-//		
-//		Employee emp = ise.GET_EMPLOYEE("cmakri06", "1234");
-//		
-//		if(emp==null){
-//			System.out.println("Error");
-//		}
-//		else{
-//			System.out.println(emp.getFirstName());
-//		}
-//		
-//		
-		
 		LoginViewPoint lvp = new LoginViewPoint(context);
 		lvp.setVisible(true);
 		
-		
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-	 */
+
 	public void stop(BundleContext context) throws Exception {
 		System.out.println("Stop Sample Consumer");
 	}

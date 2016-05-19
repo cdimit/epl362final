@@ -17,14 +17,8 @@ public class Consultation {
 
 	}
 
-	public Consultation(Integer ConsultationID,
-			Integer EmployeeID,
-			Integer CaseID,
-			String Details,
-			Date ConsultationDate,
-			Integer Went,
-			Integer isDropin, 
-			Integer ClientCaseID) {
+	public Consultation(Integer ConsultationID, Integer EmployeeID, Integer CaseID, String Details,
+			Date ConsultationDate, Integer Went, Integer isDropin, Integer ClientCaseID) {
 
 		this.ConsultationID=ConsultationID;
 		this.EmployeeID=EmployeeID;

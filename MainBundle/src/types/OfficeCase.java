@@ -5,6 +5,7 @@ import java.util.Date;
 public class OfficeCase {
 
 	private Integer CaseID;
+	private Integer ClientID;
 	private String Name;
 	private String Details;
 	private Integer isClosed;
@@ -15,15 +16,11 @@ public class OfficeCase {
 
 	}
 
-	public OfficeCase(
-			Integer CaseID, 
-			String Name,
-			String Details,
-			Integer isClosed,
-			Date LastUpdated,
+	public OfficeCase(Integer CaseID,Integer ClientID, String Name, String Details, Integer isClosed, Date LastUpdated,
 			Integer EmployeeID) {
 
 		this.CaseID=CaseID;
+		this.ClientID=ClientID;
 		this.Name=Name;
 		this.Details=Details;
 		this.isClosed=isClosed;
@@ -38,6 +35,15 @@ public class OfficeCase {
 	public void setCaseID(Integer caseID) {
 		CaseID = caseID;
 	}
+	
+	public Integer getClientID() {
+		return ClientID;
+	}
+
+	public void setClientID(Integer clientID) {
+		ClientID = clientID;
+	}
+
 
 	public String getName() {
 		return Name;
